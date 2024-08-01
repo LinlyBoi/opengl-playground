@@ -1,8 +1,10 @@
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <GLES2/gl2.h>
 #include <EGL/egl.h>
 #include <GL/glut.h>
+// #include <GLES2/gl2.h>
 #include <iostream>
+#include "pog.h"
 int main() {
   int x;
   glfwInit();
