@@ -5,9 +5,9 @@
 # @version 0.1
 
 build:
-	g++ -o pog pog.cpp -lglfw -lGLESv2 -lm -lGL
+	g++ -o ./out/pog pog.cpp -lglfw -lGLESv2 -lm -lGL
 run: build
-	./pog
+	./out/pog
 
 
 # end
