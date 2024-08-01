@@ -15,11 +15,23 @@ int main() {
   GLFWwindow *window;
   window = glfwCreateWindow(1920, 1080, "Test Window", NULL, NULL);
   if (window == NULL) {
-	// error handling
-	  std::cout << "AH HECK INIT FAILED BRUV" << std::endl;
+    // error handling
+    std::cout << "AH HECK INIT FAILED BRUV" << std::endl;
+    return 1;
   }
   glViewport(0, 0, 1920, 1080);
   glfwMakeContextCurrent(window);
+  glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+  while (!glfwWindowShouldClose(window)) {
+    processInput(window);
+
+    glClearColor(0.2f, 0.3f, 0.6f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    glfwSwapBuffers(window);
+    glfwPollEvents();
+  }
   float vertices[] = {
   -0.5f, -0.5f, 0.0f,
   0.5f, -0.5f, 0.0f,
