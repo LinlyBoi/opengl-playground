@@ -73,13 +73,11 @@ int main() {
     std::cout << "Vertex shader is gOOd!" << std::endl;
   const char *fragmentShaderSource =
       "#version 330 core\n"
-      "in vec3 aPos;\n"
       "out vec4 FragColor;\n"
-      "void main()\n"
+      "void main(void)\n"
       "{\n"
       " FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);"
       "}\0";
-
   unsigned int fragmentShader;
   fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
   glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
@@ -100,6 +98,8 @@ int main() {
   // attaching shaders to our program
   glAttachShader(shaderProgram, vertexShader);
   glAttachShader(shaderProgram, fragmentShader);
+
+  glBindAttribLocation(shaderProgram, 0, "aPos");
   glLinkProgram(shaderProgram);
   glValidateProgram(shaderProgram);
   glGetProgramiv(shaderProgram, GL_VALIDATE_STATUS, &success);
