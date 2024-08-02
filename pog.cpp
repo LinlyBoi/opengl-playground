@@ -8,20 +8,28 @@
 #include <iostream>
 int main() {
   glfwInit();
+  std::cout << "init bruv" << std::endl;
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-  // glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+  glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
   GLFWwindow *window;
-  window = glfwCreateWindow(1920, 1080, "Test Window", NULL, NULL);
+  window = glfwCreateWindow(600, 600, "Test Window", NULL, NULL);
   if (window == NULL) {
     // error handling
     std::cout << "AH HECK INIT FAILED BRUV" << std::endl;
-    return 1;
+    glfwTerminate();
+    return -1;
   }
-  glViewport(0, 0, 1920, 1080);
+
+  std::cout << "abouta viewport" << std::endl;
+  // glViewport(0, 0, 1920, 1080);
+  std::cout << "viewported bruv" << std::endl;
+
   glfwMakeContextCurrent(window);
   glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+  std::cout << "set frame buffer size callback" << std::endl;
 
   // glad: load all OpenGL function pointers
   // ---------------------------------------
@@ -61,9 +69,12 @@ int main() {
     std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n"
               << infoLog << std::endl;
   } // check if compilation succesful
+  if (success == GL_TRUE)
+    std::cout << "Vertex shader is gOOd!" << std::endl;
   const char *fragmentShaderSource =
       "#version 330 core\n"
-      "layout (location = 0) in vec3 aPos;\n"
+      "in vec3 aPos;\n"
+      "out vec4 FragColor;\n"
       "void main()\n"
       "{\n"
       " FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);"
@@ -80,6 +91,8 @@ int main() {
     std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n"
               << infoLog << std::endl;
   };
+  if (success == GL_TRUE)
+    std::cout << "Fragment shader success" << std::endl;
 
   unsigned int shaderProgram;
   shaderProgram = glCreateProgram(); // create shader program
@@ -89,6 +102,13 @@ int main() {
   glAttachShader(shaderProgram, fragmentShader);
   glLinkProgram(shaderProgram);
   glValidateProgram(shaderProgram);
+  glGetProgramiv(shaderProgram, GL_VALIDATE_STATUS, &success);
+  if (success == GL_FALSE) {
+    // std::cout << glGetShaderInfoLog(shaderProgram, 1024) << std::endl;
+    return 1;
+  }
+  if (success == GL_TRUE)
+    std::cout << "Programiv success" << std::endl;
 
   glUseProgram(shaderProgram); // use it NOW
 
