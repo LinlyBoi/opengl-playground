@@ -76,7 +76,7 @@ int main() {
 
   glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
   if (!success) {
-    glGetShaderInfoLog(vertex, 512, NULL, infoLog);
+    glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
     std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n"
               << infoLog << std::endl;
   };
