@@ -88,6 +88,7 @@ int main() {
   glAttachShader(shaderProgram, vertexShader);
   glAttachShader(shaderProgram, fragmentShader);
   glLinkProgram(shaderProgram);
+  glValidateProgram(shaderProgram);
 
   glUseProgram(shaderProgram); // use it NOW
 
